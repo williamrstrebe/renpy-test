@@ -26,16 +26,52 @@ init python:
             return "afternoon"
         return "night"
 
+    def player_matches_npc_location():
+        """True if the NPC and player are in the same map place (home sub-rooms count as home)."""
+        pl = current_location
+        nloc = npc.location
+        if nloc == "home":
+            return pl in (
+                "home",
+                "home_kitchen",
+                "home_bathroom",
+                "home_bedroom",
+            )
+        return pl == nloc
+
+    def get_location_hud_name():
+        loc = current_location
+        if loc == "home":
+            return "Home (front)"
+        if loc == "home_kitchen":
+            return "Home — kitchen"
+        if loc == "home_bathroom":
+            return "Home — bathroom"
+        if loc == "home_bedroom":
+            return "Home — bedroom"
+        if loc == "school":
+            return "School"
+        if loc == "neighborhood":
+            return "Neighborhood"
+        return loc
+
     def get_location_bg():
         p = time_period()
         loc = current_location
 
         if loc == "neighborhood":
             return f"bg neighborhood {p}"
-        elif loc == "school":
+        if loc == "school":
             return f"bg school front {p}"
-        elif loc == "home":
+        if loc == "home_kitchen":
+            return f"bg home kitchen {p}"
+        if loc == "home_bathroom":
+            return f"bg home bathroom {p}"
+        if loc == "home_bedroom":
+            return "bg home bedroom"
+        if loc == "home":
             return f"bg home front {p}"
+        return f"bg home front {p}"
 
     # ---- NEEDS SYSTEM ----
     class Needs:

@@ -1,6 +1,6 @@
 label location_try_npc_interaction:
 
-    if npc.location == current_location:
+    if player_matches_npc_location():
         menu:
             "Talk to [npc.name]":
                 $ do_activity("talk", 10)
